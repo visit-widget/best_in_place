@@ -1,5 +1,7 @@
 appraise 'rails-4.2' do
+  gem 'bundler', '~> 1.3'
   gem 'rails', github: 'rails/rails', branch: '4-2-stable'
+  gem 'rspec-rails', '~> 3'
   gem 'sqlite3', '~> 1.3.6'
 end
 
