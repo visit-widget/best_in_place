@@ -1,6 +1,9 @@
 #Changelog
 - unreleased
 
+- v.3.1.2
+  - Updating Struct syntax to use explicit Hash for :opts
+
 - v.3.1.1
   - Chore/improve readme
   - Upgrade PhantomJS version for travis and remove deprecation warning

@@ -2,7 +2,7 @@ module BestInPlace
   module DisplayMethods  #:nodoc:
     module_function
 
-    class Renderer < Struct.new(:opts)
+    Renderer = Struct.new('Renderer', :opts) do |renderer_class|
       def render_json(object)
         case opts[:type]
           when :model
@@ -30,15 +30,30 @@ module BestInPlace
     end
 
     def add_model_method(klass, attr, display_as)
-      model_attributes(klass)[attr.to_s] = Renderer.new method: display_as.to_sym, type: :model
+      opts = {
+        method: display_as.to_sym,
+        type: :model
+      }
+      model_attributes(klass)[attr.to_s] = Renderer.new(opts) 
     end
 
     def add_helper_method(klass, attr, helper_method, helper_options = nil)
-      model_attributes(klass)[attr.to_s] = Renderer.new method: helper_method.to_sym, type: :helper, attr: attr, helper_options: helper_options
+      opts = {
+        method: helper_method.to_sym,
+        type: :helper,
+        attr: attr,
+        helper_options: helper_options
+      }
+      model_attributes(klass)[attr.to_s] = Renderer.new(opts)
     end
 
     def add_helper_proc(klass, attr, helper_proc)
-      model_attributes(klass)[attr.to_s] = Renderer.new type: :proc, attr: attr, proc: helper_proc
+      opts = {
+        type: :proc,
+        attr: attr,
+        proc: helper_proc
+      }
+      model_attributes(klass)[attr.to_s] = Renderer.new(opts)
     end
 
     def model_attributes(klass)
